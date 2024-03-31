@@ -20,3 +20,5 @@ class Post(models.Model):
     published_date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, related_name='posts', on_delete=models.CASCADE)
+
+##jjfjfjfj 
