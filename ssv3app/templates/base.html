@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Your Site{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <!-- Your navigation bar -->
+    </header>
+    
+    {% block content %}
+    <!-- Content to be overridden in child templates -->
+    {% endblock %}
+    
+    <footer>
+        <!-- Your footer here -->
+    </footer>
+</body>
+</html>
