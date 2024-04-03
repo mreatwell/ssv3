@@ -1,0 +1,13 @@
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+header, footer {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}

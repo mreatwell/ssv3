@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'ssv3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'ssv3app/templates'],
+        'DIRS': [BASE_DIR / 'ssv3app/templates'],  # Keep your templates directory here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,8 +69,23 @@ TEMPLATES = [
     },
 ]
 
+# Add the following to serve static files from React build
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / '/Users/mreatwell/ssv3/ssv3appreact/build/static',  # Update this path to where your static files will live
+    # If your React build folder is at the root of your Django project, it might look like this:
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Where Django will collect static files for deployment
 WSGI_APPLICATION = 'ssv3.wsgi.application'
 
+# Add configuration for the static files storage if you're planning to collect static files
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# Additional settings for media files (user-uploaded content)
+# MEDIA_URL and MEDIA_ROOT are not mandatory for static files handling but are shown here for completeness
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -122,3 +138,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if DEBUG:
+    from django.conf import settings
+    from django.conf.urls.static import static
