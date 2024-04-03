@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Item
-from .forms import UserForm, ProfileForm
+from .forms import UserForm, ProfileForm, YourForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def home(request):
     return render(request, 'home.html')
@@ -26,6 +27,23 @@ def create_item(request):
         form = ItemForm()
     return render(request, 'create_item.html', {'form': form})
 
+def form_submission_view(request):
+    if request.method == 'POST':
+        form = YourForm(request.POST)
+        if form.is_valid():
+            # Process the data in form.cleaned_data
+            # Save the form, e.g., form.save() if it's a ModelForm
+            messages.success(request, 'Profile successfully updated.')
+            return redirect('success_url')
+        else:
+            # Log form errors
+            print(form.errors)
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = YourForm()
+
+    return render(request, 'your_template.html', {'form': form})
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
@@ -43,4 +61,6 @@ def edit_profile(request):
     return render(request, 'edit_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form
+
+
     })
